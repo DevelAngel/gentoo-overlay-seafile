@@ -1,0 +1,22 @@
+diff --git a/server/upload-file.c b/server/upload-file.c
+index 8dc6001..685e154 100755
+--- a/server/upload-file.c
++++ b/server/upload-file.c
+@@ -2503,7 +2503,7 @@ out:
+         /* Set keepalive to 0. This will cause evhtp to close the
+          * connection after sending the reply.
+          */
+-        req->keepalive = 0;
++        evhtp_request_set_keepalive(req, 0);
+ 
+         fsm->state = RECV_ERROR;
+     }
+@@ -2803,7 +2803,7 @@ err:
+     /* Set keepalive to 0. This will cause evhtp to close the
+      * connection after sending the reply.
+      */
+-    req->keepalive = 0;
++    evhtp_request_set_keepalive(req, 0);
+     send_error_reply (req, EVHTP_RES_BADREQ, err_msg);
+ 
+     g_free (repo_id);
