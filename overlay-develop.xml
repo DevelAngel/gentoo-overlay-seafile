@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" status="unofficial">
+    <name>develangel-seafile-develop</name>
+    <description lang="en">DevelAngel's ebuilds for Seafile Cloud Server</description>
+    <homepage>https://github.com/DevelAngel/gentoo-overlay-seafile</homepage>
+    <owner type="person">
+      <name>Angelos Drossos</name>
+      <email>develangel@mail.drossos.de</email>
+    </owner>
+    <source type="git" branch="develop">https://github.com/DevelAngel/gentoo-overlay-seafile.git</source>
+    <feed>https://github.com/DevelAngel/gentoo-overlay-seafile/commits/develop.atom</feed>
+  </repo>
+</repositories>
+
