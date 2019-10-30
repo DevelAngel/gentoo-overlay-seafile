@@ -1,0 +1,26 @@
+diff --git a/server/gc/fsck.c b/server/gc/fsck.c
+index c528be6..6b5ef3a 100644
+--- a/server/gc/fsck.c
++++ b/server/gc/fsck.c
+@@ -669,7 +669,7 @@ repair_repos (GList *repo_id_list, gboolean repair, int max_thread_num)
+ {
+     GList *ptr;
+     char *repo_id;
+-    GThreadPool *pool;
++    GThreadPool *pool = NULL;
+ 
+     if (max_thread_num) {
+         pool = g_thread_pool_new(
+diff --git a/server/gc/seaf-fsck.c b/server/gc/seaf-fsck.c
+index 890f61a..bc3ade7 100644
+--- a/server/gc/seaf-fsck.c
++++ b/server/gc/seaf-fsck.c
+@@ -159,7 +159,7 @@ main(int argc, char *argv[])
+         seafile_dir = g_build_filename (config_dir, "seafile-data", NULL);
+ 
+ #ifdef __linux__
+-    uid_t current_user, seafile_user;
++    uid_t current_user = -1, seafile_user = -1;
+     if (!force && !check_user (seafile_dir, &current_user, &seafile_user)) {
+         seaf_message ("Current user (%u) is not the user for running "
+                       "seafile server (%u). Unable to run fsck.\n",

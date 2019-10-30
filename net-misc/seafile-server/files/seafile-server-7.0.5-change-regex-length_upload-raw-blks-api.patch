@@ -1,0 +1,13 @@
+diff --git a/server/upload-file.c b/server/upload-file.c
+index bb0ba15..faae795 100755
+--- a/server/upload-file.c
++++ b/server/upload-file.c
+@@ -2910,7 +2910,7 @@ upload_file_init (evhtp_t *htp, const char *http_temp_dir)
+     cb = evhtp_set_regex_cb (htp, "^/upload-api/.*", upload_api_cb, NULL);
+     evhtp_callback_set_hook(cb, evhtp_hook_on_headers, upload_headers_cb, NULL);
+ 
+-    cb = evhtp_set_regex_cb (htp, "^/upload-raw-blks-api/.*",
++    cb = evhtp_set_regex_cb (htp, "^/upload-raw-blks-api/.*.*.*",
+                              upload_raw_blks_api_cb, NULL);
+     evhtp_callback_set_hook(cb, evhtp_hook_on_headers, upload_headers_cb, NULL);
+ 

@@ -22,7 +22,7 @@ REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 # which may live on another server.
 DEPEND="${PYTHON_DEPS}
 	=net-misc/ccnet-server-${PV}[${PYTHON_USEDEP}]
-	>=net-libs/libevhtp-1.2.12
+	>=net-libs/libevhtp-1.2.12[regex]
 	net-libs/libsearpc[${PYTHON_USEDEP}]
 	dev-libs/glib:2
 	dev-libs/libevent:0
@@ -31,14 +31,16 @@ DEPEND="${PYTHON_DEPS}
 	dev-libs/openssl:0
 	dev-db/sqlite:3
 	"
-# TODO: Is net-misc/seafile really necessary? (see src_install for details)
+# Block seafile to prevent file collisions
 RDEPEND="${DEPEND}
-	>=net-misc/seafile-7.0.2
+	!net-misc/seafile
 	$(vala_depend)"
 
 PATCHES=(
 	"${FILESDIR}"/seafile-server-7.0.5-evhtp-1.2.11-request-keepalive.patch
 	"${FILESDIR}"/seafile-server-7.0.5-evhtp-1.2.12-evhtp_set_hook.patch
+	"${FILESDIR}"/seafile-server-7.0.5-change-regex-length_upload-raw-blks-api.patch
+	"${FILESDIR}"/seafile-server-7.0.5-remove-warning-uninitialized.patch
 	)
 
 S=${WORKDIR}/${P}-server
@@ -64,12 +66,6 @@ src_configure() {
 
 src_install() {
 	default
-	# The seafile-server still has some seafile library components
-	# and wants to install them
-	# Remove them to prevent file collisions with net-misc/seafile
-	find "${ED}" -name 'libseafile.pc' -delete || die
-	find "${ED}" -path '*/include/seafile/seafile*.h' -delete || die
-	find "${ED}" -path '*/python*/site-packages/seafile/*' -delete || die
 	# Remove unnecessary .la files, as recommended by ltprune.eclass
 	find "${ED}" -name '*.la' -delete || die
 	python_fix_shebang "${ED}"/usr/bin
